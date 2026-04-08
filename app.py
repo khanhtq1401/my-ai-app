@@ -15,7 +15,7 @@ GOOGLE_JSON = st.secrets["GOOGLE_SERVICE_ACCOUNT_JSON"]
 
 # 3. Thiết lập kết nối
 genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel('gemini-1.5-flash')
+model = genai.GenerativeModel('models/gemini-1.5-flash')
 
 # Kết nối Google Sheet
 scope = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive']
