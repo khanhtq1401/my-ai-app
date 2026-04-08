@@ -7,11 +7,12 @@ from google.oauth2.service_account import Credentials
 st.set_page_config(page_title="AI Assistant", layout="centered")
 st.title("🤖 Trợ lý AI của tôi")
 
-# 2. Kết nối Google Sheet (Tối ưu hóa để chạy nhanh hơn)
+# 2. Kết nối Google Sheet (Sửa lỗi Hash bằng cách thêm dấu _)
 @st.cache_resource
-def connect_google_sheet(conf, sheet_id):
+def connect_google_sheet(_conf, sheet_id):
     scope = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive']
-    creds = Credentials.from_service_account_info(conf, scopes=scope)
+    # Sử dụng _conf để Streamlit không thực hiện hashing
+    creds = Credentials.from_service_account_info(_conf, scopes=scope)
     client = gspread.authorize(creds)
     return client.open_by_key(sheet_id).sheet1
 
@@ -23,9 +24,10 @@ try:
     
     # Thiết lập AI
     genai.configure(api_key=GEMINI_API_KEY)
+    # Thêm tiền tố models/ để tránh lỗi NotFound
     model = genai.GenerativeModel('models/gemini-1.5-flash')
     
-    # Thiết lập Sheet
+    # Thiết lập Sheet (Truyền GOOGLE_JSON vào tham số _conf)
     sheet = connect_google_sheet(GOOGLE_JSON, GOOGLE_SHEET_ID)
 except Exception as e:
     st.error(f"❌ Lỗi cấu hình Secrets hoặc Kết nối: {e}")
