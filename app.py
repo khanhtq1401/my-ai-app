@@ -25,7 +25,7 @@ try:
     # Thiết lập AI
     genai.configure(api_key=GEMINI_API_KEY)
     # Thêm tiền tố models/ để tránh lỗi NotFound
-    model = genai.GenerativeModel('models/gemini-1.5-flash')
+    model = genai.GenerativeModel('gemini-1.5-flash')
     
     # Thiết lập Sheet (Truyền GOOGLE_JSON vào tham số _conf)
     sheet = connect_google_sheet(GOOGLE_JSON, GOOGLE_SHEET_ID)
